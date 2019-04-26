@@ -189,3 +189,11 @@ You might also want to set up some aliases:
 git config --global alias.st status
 git config --global alias.co checkout
 ```
+
+If you want to use Visual Studio Code for
+[editing your git commit and diff messages](https://code.visualstudio.com/docs/editor/versioncontrol#_vs-code-as-git-editor),
+you can do so by:
+
+```
+git config --global core.editor "code --wait"
+```
