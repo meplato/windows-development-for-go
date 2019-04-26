@@ -56,9 +56,11 @@ refreshenv
 choco install Git-Credential-Manager-for-Windows -y
 choco install github -y
 
-# NodeJS and tools
-choco install nodejs.install -y
+# NodeJS (LTS) and tools
+choco install nodejs-lts -y
 npm install -g npm-windows-upgrade
+npm install -g --production windows-build-tools
+npm install -g node-gyp
 npm install -g yarn
 
 # Visual Studio Code (and Fira Code font)
@@ -122,11 +124,11 @@ With [Go modules](https://github.com/golang/go/wiki/Modules) enabled,
 `GOPATH` becomes obsolete and is deprecated from Go 1.13 and later.
 
 To enable Go modules for Go versions prior to Go 1.13, you need to set the
-`GO111MODULE` environment variable to `on`:
+`GO111MODULE` environment variable to `on`. With PowerShell, do:
 
 ```
-set GO111MODULE=on
-env | sort
+$env:GO111MODULE="on"
+Get-ChildItem Env:
 ```
 
 ## Visual Studio Code
