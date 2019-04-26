@@ -59,7 +59,7 @@ choco install github -y
 # NodeJS (LTS) and tools
 choco install nodejs-lts -y
 npm install -g npm-windows-upgrade
-npm install -g --production windows-build-tools
+npm install -g windows-build-tools
 npm install -g node-gyp
 npm install -g yarn
 
@@ -169,5 +169,23 @@ GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.16.
 
 ## Git configuration
 
-...
+Make sure to disable automatic conversion of LF to CRLF (and vice versa).
 
+```
+git config --global core.autocrlf false
+```
+
+Next, setup your credentials. They will be used e.g. when pushing a branch
+over to GitHub:
+
+```
+git config --global user.email xxx@meplato.de
+git config --global user.name "Firstname Lastname"
+```
+
+You might also want to set up some aliases:
+
+```
+git config --global alias.st status
+git config --global alias.co checkout
+```
