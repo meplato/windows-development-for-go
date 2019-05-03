@@ -28,9 +28,7 @@ choco install Microsoft-Hyper-V-All -y -source windowsFeatures
 ## Install packages
 
 Next, open PowerShell as an administrator. Then install
-all the tools we want as a Go programmer on Windows by
-copying over the [`packages.config`](https://github.com/meplato/windows-development-for-go/blob/master/packages.config)
-file from this repository. Then run:
+all the tools we want as a Go programmer on Windows by running:
 
 ```
 # Docker for Windows
