@@ -167,10 +167,10 @@ GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.16.
 
 ## Git configuration
 
-Make sure to disable automatic conversion of LF to CRLF (and vice versa).
+Make sure to disable automatic conversion of LF to CRLF (and vice versa) (see [here](https://help.github.com/en/articles/dealing-with-line-endings) for details).
 
 ```
-git config --global core.autocrlf false
+git config --global core.autocrlf true
 ```
 
 Next, setup your credentials. They will be used e.g. when pushing a branch
