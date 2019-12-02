@@ -34,13 +34,16 @@ all the tools we want as a Go programmer on Windows by running:
 # Docker for Windows
 choco install docker-for-windows -y
 
+# protoc (Compiler for protobuf)
+choco install protoc -y
+
 # Go programming language
 choco install golang -y
 
 # Run make on Windows
 choco install make -y
 
-# Hyper is a terminal like iterm2 on macOS
+# Hyper is a terminal like iterm2 on macOS (not required if using powershell)
 choco install hyper -y
 
 # Git on Windows
@@ -56,10 +59,10 @@ choco install github -y
 
 # NodeJS (LTS) and tools
 choco install nodejs-lts -y
+choco install yarn -y
 npm install -g npm-windows-upgrade
 npm install -g windows-build-tools
 npm install -g node-gyp
-npm install -g yarn
 
 # Visual Studio Code (and Fira Code font)
 choco install visualstudiocode -y
@@ -69,12 +72,17 @@ choco install firacode -y
 choco install ruby -y
 choco install ruby.devkit -y
 
-# Various other tools
+# Various other tools (not required)
 choco install 7zip.install -y
 choco install sysinternals -y
 ```
 
 From time to time, you might run [`choco outdated`](https://chocolatey.org/docs/commands-outdated) to see which packages have new versions and [`choco upgrade`](https://chocolatey.org/docs/commands-upgrade) accordingly.
+
+## PHRASEAPP
+To install it, just use choco: `choco install phraseapp -y`
+After that you need to [login](https://app.phrase.com/account/login) and then go to the [Access Tokens page](https://app.phrase.com/settings/oauth_access_tokens). Generate a new access token and copy it. *Important:* If you leave the page, you can never again view the generated access token. You only can create a new one.
+And then create a new environment variable, with PowerShell: `$env:PHRASEAPP_ACCESS_TOKEN="1c007dbbe497b95fbcbbd2d0eb04b18e3f195230f0a92adcbd07006b4c02893b"`
 
 ## Go configuration
 
@@ -84,8 +92,9 @@ Type `go env` to see the settings of your Go installation:
 
 ```
 C:\Users\oliver> go version
-go version go1.12.4 windows/amd64
+go version go1.13.4 windows/amd64
 C:\Users\oliver> go env
+set GO111MODULE=
 set GOARCH=amd64
 set GOBIN=
 set GOCACHE=C:\Users\oliver\AppData\Local\go-build
@@ -162,7 +171,7 @@ I also use PowerShell as the integrated terminal, but you can use anything that 
 The lint tool can be installed from the integrated terminal (Terminal -> New Terminal):
 
 ```
-GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.16.0
+GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.21.0
 ```
 
 ## Git configuration
