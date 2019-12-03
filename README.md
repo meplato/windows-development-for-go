@@ -80,9 +80,13 @@ choco install sysinternals -y
 From time to time, you might run [`choco outdated`](https://chocolatey.org/docs/commands-outdated) to see which packages have new versions and [`choco upgrade`](https://chocolatey.org/docs/commands-upgrade) accordingly.
 
 ## PHRASEAPP
-To install it, just use choco: `choco install phraseapp -y`
-After that you need to [login](https://app.phrase.com/account/login) and then go to the [Access Tokens page](https://app.phrase.com/settings/oauth_access_tokens). Generate a new access token and copy it. *Important:* If you leave the page, you can never again view the generated access token. You only can create a new one.
-And then create a new environment variable, with PowerShell: `$env:PHRASEAPP_ACCESS_TOKEN="1c007dbbe497b95fbcbbd2d0eb04b18e3f195230f0a92adcbd07006b4c02893b"`
+To install it, just use choco: `choco install phraseapp -y` 
+
+After that you need to [login](https://app.phrase.com/account/login) and then go to the [Access Tokens page](https://app.phrase.com/settings/oauth_access_tokens). Generate a new access token and copy it. 
+
+*Important:* If you leave the page, you can never again view the generated access token. You only can create a new one.
+And then create a new environment variable, with PowerShell: 
+`$env:PHRASEAPP_ACCESS_TOKEN="YOUR_TOKEN_HERE"`
 
 ## Go configuration
 
