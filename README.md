@@ -3,10 +3,15 @@
 This is just a short summary for Hipsters developing with Go
 on Windows.
 
-## Install package manager
+## Install package manager & Windows Terminal
 
 First, install [Chocolatey](https://chocolatey.org/), a package manager for Windows,
 as described [here](https://chocolatey.org/install).
+Secondly, install [Windows terminal](https://github.com/microsoft/terminal).
+Thirdly, install your first choco package, the latest powershell:
+```
+choco install powershell-core -y
+```
 
 ## PowerShell settings
 
@@ -17,64 +22,47 @@ You're a developer--the terminal is your friend.
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser
 ```
 
-## Windows settings
-
-You might want to enable HyperV for Windows.
-
-```
-choco install Microsoft-Hyper-V-All -y -source windowsFeatures
-```
-
 ## Install packages
 
-Next, open PowerShell as an administrator. Then install
+Next, open the windows terminal as an administrator. Then install
 all the tools we want as a Go programmer on Windows by running:
 
 ```
 # Docker for Windows
-choco install docker-for-windows -y
+choco install docker-desktop -y
 
 # protoc (Compiler for protobuf)
 choco install protoc -y
 
+# Python, required for some npm packages
+choco install python -y
+choco install python2 -y
+# IMPORTANT: make sure to permanently add the Python27 path to the path environment variable
+
+
 # Go programming language
+choco install go -y
 choco install golang -y
 
 # Run make on Windows
 choco install make -y
 
-# Hyper is a terminal like iterm2 on macOS (not required if using powershell)
-choco install hyper -y
-
 # Git on Windows
-choco install git.install -y --params="'/GitAndUnixToolsOnPath /NoAutoCrlf'"
+choco install git -y --params="'/GitAndUnixToolsOnPath /NoAutoCrlf'"
+choco install gh -y
+choco install github-desktop -y
 choco install poshgit -y
 refreshenv
 
-# Update path (might not be necessary)
-# $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-
-choco install Git-Credential-Manager-for-Windows -y
-choco install github -y
-
-# NodeJS (LTS) and tools
-choco install nodejs-lts -y
+# NodeJS (v14.18.1 because mall uses this version) and tools
+choco install nodejs --version=14.18.1 -y
 choco install yarn -y
-npm install -g npm-windows-upgrade
-npm install -g windows-build-tools
-npm install -g node-gyp
+npm install -g node-gyp@6.0.1
+npm install -g eslint@6.8.0
 
 # Visual Studio Code (and Fira Code font)
-choco install visualstudiocode -y
-choco install firacode -y
-
-# Ruby (e.g. for generating markdown pages with GitHub wiki)
-choco install ruby -y
-choco install ruby.devkit -y
-
-# Various other tools (not required)
-choco install 7zip.install -y
-choco install sysinternals -y
+choco install vscode -y
+choco install FiraCode -y
 ```
 
 From time to time, you might run [`choco outdated`](https://chocolatey.org/docs/commands-outdated) to see which packages have new versions and [`choco upgrade`](https://chocolatey.org/docs/commands-upgrade) accordingly.
@@ -90,56 +78,53 @@ And then create a new environment variable, with PowerShell:
 
 ## Go configuration
 
-Please open a new PowerShell window, _not running as administrator_.
+Please open a new terminal window, _not running as administrator_.
 
 Type `go env` to see the settings of your Go installation:
 
 ```
-C:\Users\oliver> go version
-go version go1.13.4 windows/amd64
-C:\Users\oliver> go env
+C:\Users\Marek> go version
+go version go1.19.1 windows/amd64
+C:\Users\Marek> go env
 set GO111MODULE=
 set GOARCH=amd64
 set GOBIN=
-set GOCACHE=C:\Users\oliver\AppData\Local\go-build
+set GOCACHE=C:\Users\Marek\AppData\Local\go-build
+set GOENV=C:\Users\Marek\AppData\Roaming\go\env
 set GOEXE=.exe
+set GOEXPERIMENT=
 set GOFLAGS=
 set GOHOSTARCH=amd64
 set GOHOSTOS=windows
+set GOINSECURE=
+set GOMODCACHE=C:\Users\Marek\go\pkg\mod
+set GONOPROXY=github.com/meplato/*,meplato.com/*,meplato.cloud/*
+set GONOSUMDB=github.com/meplato/*,meplato.com/*,meplato.cloud/*
 set GOOS=windows
-set GOPATH=C:\Users\oliver\go
-set GOPROXY=
-set GORACE=
-set GOROOT=C:\Go
+set GOPATH=C:\Users\Marek\go
+set GOPRIVATE=github.com/meplato/*,meplato.com/*,meplato.cloud/*
+set GOPROXY=https://proxy.golang.org,direct
+set GOROOT=C:\Program Files\Go
+set GOSUMDB=sum.golang.org
 set GOTMPDIR=
-set GOTOOLDIR=C:\Go\pkg\tool\windows_amd64
+set GOTOOLDIR=C:\Program Files\Go\pkg\tool\windows_amd64
+set GOVCS=
+set GOVERSION=go1.19.1
 set GCCGO=gccgo
+set GOAMD64=v1
+set AR=ar
 set CC=gcc
 set CXX=g++
 set CGO_ENABLED=1
-set GOMOD=
+set GOMOD=NUL
+set GOWORK=
 set CGO_CFLAGS=-g -O2
 set CGO_CPPFLAGS=
 set CGO_CXXFLAGS=-g -O2
 set CGO_FFLAGS=-g -O2
 set CGO_LDFLAGS=-g -O2
 set PKG_CONFIG=pkg-config
-set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -fmessage-length=0 -fdebug-prefix-map=C:\Users\oliver\AppData\Local\Temp\go-build404466978=/tmp/go-build -gno-record-gcc-switches
-```
-
-Especially important is the `GOPATH` variable. Prior to the introduction of
-[Go modules](https://github.com/golang/go/wiki/Modules), the `GOPATH` variable
-specifies your Go workspace, i.e. where your source code and projects live.
-
-With [Go modules](https://github.com/golang/go/wiki/Modules) enabled,
-`GOPATH` becomes obsolete and is deprecated from Go 1.13 and later.
-
-To enable Go modules for Go versions prior to Go 1.13, you need to set the
-`GO111MODULE` environment variable to `on`. With PowerShell, do:
-
-```
-$env:GO111MODULE="on"
-Get-ChildItem Env:
+set GOGCCFLAGS=-m64 -mthreads -fno-caret-diagnostics -Qunused-arguments -Wl,--no-gc-sections -fmessage-length=0 -fdebug-prefix-map=C:\Users\Marek\AppData\Local\Temp\go-build3035694521=/tmp/go-build -gno-record-gcc-switches
 ```
 
 ## Visual Studio Code
